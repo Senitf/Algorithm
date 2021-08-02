@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		A2DF9EEC26ADE1DF00913C04 /* Algorithm */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Algorithm; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2DF9EEF26ADE1DF00913C04 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A2E3D50B26B74137008595AA /* stdc++.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "stdc++.h"; path = "Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/bits/stdc++.h"; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +58,7 @@
 		A2DF9EEE26ADE1DF00913C04 /* Algorithm */ = {
 			isa = PBXGroup;
 			children = (
+				A2E3D50B26B74137008595AA /* stdc++.h */,
 				A2DF9EEF26ADE1DF00913C04 /* main.cpp */,
 			);
 			path = Algorithm;
