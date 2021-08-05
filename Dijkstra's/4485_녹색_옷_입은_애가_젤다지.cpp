@@ -38,6 +38,6 @@ int main(){
                 }
             }
         }
-        printf("Problem %d: %d", TC, dist[N][N]);
+        printf("Problem %d: %d\n", TC, dist[N][N]);
     }
 }
