@@ -8,8 +8,8 @@
 #include <climits>
 using namespace std;
 priority_queue<int> dist[1001];
-priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
-vector<pair<int, int>> v[1001];
+priority_queue<pair<int,int>, vector<pair<int,int> >, greater<pair<int, int> > pq;
+vector<pair<int, int> > v[1001];
 int n, m, k, a, b, c, i, cur, val;
 int main(){
     scanf("%d %d %d", &n, &m, &k);
