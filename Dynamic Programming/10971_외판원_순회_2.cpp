@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#define INF 1e9
+#define INF 1e9 //INT_MAX 로 하면 오버플로우 때문에 오답처리됨
 using namespace std;
 int arr[16][16], N, v[65536][16];
 int func(int ved, int cur){
@@ -11,7 +11,7 @@ int func(int ved, int cur){
     }
     if(v[ved][cur] != -1) //이전에 이미 계산을 마쳐서 그대로 값만 가져와도 되는 경우
         return v[ved][cur];
-    v[ved][cur] = INF;
+    v[ved][cur] = INF; //처음 계산하는 것이므로 최대값으로 초기화 후에 진행
     for(int i = 0; i < N; i++){
         if(ved & (1 << i)) continue; //방문했던 곳이면 뛰어넘음
         if(arr[cur][i] == 0) continue; //연결되지 않으면 뛰어넘음
