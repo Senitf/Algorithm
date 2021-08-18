@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-int chk[2001][2001], dp[2001], prev;
+int chk[2501][2501], dp[2501], prev;
 string s;
 int main(){
     cin >> s;
