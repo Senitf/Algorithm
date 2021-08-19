@@ -4,8 +4,8 @@
 <br>
 
 ## 사용한 플랫폼
-- VSCode
-- XCode
+- VSCode (Python, C++)
+- XCode (C++)
 
 <br>
 
