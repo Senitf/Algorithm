@@ -6,6 +6,7 @@ int moveRight(){
     bool chk[22][22] = {0};
     for(int i = 1; i <= N; i++){
         for(int k = N - 1; k >= 1; k--){
+            if(arr[i][k] == 0) continue;
             int j = k;
             while(j != N){
                 if(arr[i][j + 1] == 0){
@@ -36,6 +37,7 @@ int moveLeft(){
     bool chk[22][22] = {0};
     for(int i = 1; i <= N; i++){
         for(int k = 2; k <= N; k++){
+            if(arr[i][k] == 0) continue;
             int j = k;
             while(j != 1){
                 if(arr[i][j - 1] == 0){
@@ -66,6 +68,7 @@ int moveUpper(){
     bool chk[22][22] = {0};
     for(int k = 2; k <= N; k++){
         for(int j = 1; j <= N; j++){
+            if(arr[k][j] == 0) continue;
             int i = k;
             while(i != 1){
                 if(arr[i - 1][j] == 0){
@@ -96,6 +99,7 @@ int moveLower(){
     bool chk[22][22] = {0};
     for(int k = N - 1; k >= 1; k--){
         for(int j = 1; j <= N; j++){
+            if(arr[k][j] == 0) continue;
             int i = k;
             while(i != N){
                 if(arr[i + 1][j] == 0){
@@ -129,15 +133,19 @@ void func(int cnt){
                 tmpAns = arr[i][j];
         }
     }
-    arrAns[cnt] = tmpAns;
-    if(cnt == 10){
-        if(maxAns < tmpAns)
+    if(maxAns < tmpAns)
             maxAns = tmpAns;
+    if(cnt == 5){
         return;
     }
-    if(tmpAns * pow(2, 10 - cnt) < maxAns || tmpAns < (arrAns[cnt + 1] / 2) || tmpAns < arrAns[cnt])
+    if(tmpAns * pow(2, 5 - cnt) <= maxAns)
         return;
     for(int i = 0; i < 4; i++){
+        for(int k = 1; k <= N; k++){
+            for(int j = 1; j <= N; j++){
+                arr[k][j] = tmpArr[k][j];
+            }
+        }
         switch (i)
         {
         case 0:
@@ -159,11 +167,6 @@ void func(int cnt){
             continue;
         }
         func(cnt + 1);
-        for(int k = 1; k <= N; k++){
-            for(int j = 1; j <= N; j++){
-                arr[k][j] = tmpArr[k][j];
-            }
-        }
     }
 }
 int main(){
@@ -171,8 +174,6 @@ int main(){
     for(int i = 1; i <= N; i++){
         for(int j = 1; j <= N; j++){
             scanf("%d", &arr[i][j]);
-            if(maxAns < arr[i][j])
-                maxAns = arr[i][j];
         }
     }
     func(0);
