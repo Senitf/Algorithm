@@ -1,181 +1,78 @@
 #include <bits/stdc++.h>
 using namespace std;
-int N, arr[22][22], maxAns, arrAns[11];
-int moveRight(){
-    int flag = 0;
-    bool chk[22][22] = {0};
-    for(int i = 1; i <= N; i++){
-        for(int k = N - 1; k >= 1; k--){
-            if(arr[i][k] == 0) continue;
-            int j = k;
-            while(j != N){
-                if(arr[i][j + 1] == 0){
-                    arr[i][j + 1] = arr[i][j];
-                    arr[i][j] = 0;
-                    flag = 1;
-                }
-                else if(arr[i][j] == arr[i][j + 1] && chk[i][j + 1] == false && chk[i][j] == false){
-                    arr[i][j + 1] *= 2;
-                    arr[i][j] = 0;
-                    flag = 1;
-                    chk[i][j + 1] = true;
-                }
-                else{
-                    break;
-                }
-                j++;
-            }
+int arr[3][3], zero, ans = -1;
+bool check(int turn){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(arr[i][j] != turn)
+                break;
+            if(j == 2)
+                return true;
         }
     }
-    if(flag == 0)
-        return -1;
-    else
-        return 1;
-}
-int moveLeft(){
-    int flag = 0;
-    bool chk[22][22] = {0};
-    for(int i = 1; i <= N; i++){
-        for(int k = 2; k <= N; k++){
-            if(arr[i][k] == 0) continue;
-            int j = k;
-            while(j != 1){
-                if(arr[i][j - 1] == 0){
-                    arr[i][j - 1] = arr[i][j];
-                    arr[i][j] = 0;
-                    flag = 1;
-                }
-                else if(arr[i][j] == arr[i][j - 1] && chk[i][j - 1] == false && chk[i][j] == false){
-                    arr[i][j - 1] *= 2;
-                    arr[i][j] = 0;
-                    flag = 1;
-                    chk[i][j - 1] = true;
-                }
-                else{
-                    break;
-                }
-                j--;
-            }
+    for(int j = 0; j < 3; j++){
+        for(int i = 0; i < 3; i++){
+            if(arr[i][j] != turn)
+                break;
+            if(i == 2)
+                return true;
         }
     }
-    if(flag == 0)
-        return -1;
-    else
-        return 1;
-}
-int moveUpper(){
-    int flag = 0;
-    bool chk[22][22] = {0};
-    for(int k = 2; k <= N; k++){
-        for(int j = 1; j <= N; j++){
-            if(arr[k][j] == 0) continue;
-            int i = k;
-            while(i != 1){
-                if(arr[i - 1][j] == 0){
-                    arr[i - 1][j] = arr[i][j];
-                    arr[i][j] = 0;
-                    flag = 1;
-                }
-                else if(arr[i][j] == arr[i - 1][j] && chk[i - 1][j] == false && chk[i][j] == false){
-                    arr[i - 1][j] *= 2;
-                    arr[i][j] = 0;
-                    flag = 1;
-                    chk[i - 1][j] = true;
-                }
-                else{
-                    break;
-                }
-                i--;
-            }
-        }
+    for(int i = 0; i < 3; i++){
+        if(arr[i][i] != turn)
+            break;
+        if(i == 2)
+            return true;
     }
-    if(flag == 0)
-        return -1;
-    else
-        return 1;
+    for(int i = 0; i < 3; i++){
+        if(arr[i][2 - i] != turn)
+            break;
+        if(i == 2)
+            return true;
+    }
+    return false;
 }
-int moveLower(){
-    int flag = 0;
-    bool chk[22][22] = {0};
-    for(int k = N - 1; k >= 1; k--){
-        for(int j = 1; j <= N; j++){
-            if(arr[k][j] == 0) continue;
-            int i = k;
-            while(i != N){
-                if(arr[i + 1][j] == 0){
-                    arr[i + 1][j] = arr[i][j];
-                    arr[i][j] = 0;
-                    flag = 1;
-                }
-                else if(arr[i][j] == arr[i + 1][j] && chk[i + 1][j] == false && chk[i][j] == false){
-                    arr[i + 1][j] *= 2;
-                    arr[i][j] = 0;
-                    flag = 1;
-                    chk[i + 1][j] = true;
-                }
+int func(int turn){
+    if(turn == 1){
+        if(check(2)) return -1;
+    }
+    else{
+        if(check(1))
+            return -1;
+    }
+    int minval = 2;
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(arr[i][j] == 0){
+                arr[i][j] = turn;
+                if(turn == 1)
+                    minval = min(minval, func(2));
                 else
-                    break;
-                i++;
+                    minval = min(minval, func(1));
+                arr[i][j] = 0;
             }
         }
     }
-    if(flag == 0)
-        return -1;
-    else
-        return 1;
-}
-void func(int cnt){
-    int tmpArr[22][22] = {0}, tmpAns = 0;
-    for(int i = 1; i <= N; i++){
-        for(int j = 1; j <= N; j++){
-            tmpArr[i][j] = arr[i][j];
-            if(tmpAns < arr[i][j])
-                tmpAns = arr[i][j];
-        }
-    }
-    if(maxAns < tmpAns)
-            maxAns = tmpAns;
-    if(cnt == 5){
-        return;
-    }
-    if(tmpAns * pow(2, 5 - cnt) <= maxAns)
-        return;
-    for(int i = 0; i < 4; i++){
-        for(int k = 1; k <= N; k++){
-            for(int j = 1; j <= N; j++){
-                arr[k][j] = tmpArr[k][j];
-            }
-        }
-        switch (i)
-        {
-        case 0:
-            tmpAns = moveRight();
-            break;
-        case 1:
-            tmpAns = moveLeft();
-            break;
-        case 2:
-            tmpAns = moveUpper();
-            break;
-        case 3:
-            tmpAns = moveLower();
-            break;
-        default:
-            break;
-        }
-        if(tmpAns == -1){
-            continue;
-        }
-        func(cnt + 1);
-    }
+    if(minval == 2 || minval == 0)
+        return 0;
+    return -minval;
 }
 int main(){
-    scanf("%d", &N);
-    for(int i = 1; i <= N; i++){
-        for(int j = 1; j <= N; j++){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
             scanf("%d", &arr[i][j]);
+            if(arr[i][j] == 0)
+                zero++;
         }
     }
-    func(0);
-    printf("%d\n", maxAns);
+    if(zero % 2 == 1)
+        ans = func(1);
+    else
+        ans = func(2);
+    if(ans == 1)
+        printf("W\n");
+    else if(ans == 0)
+        printf("D\n");
+    else
+        printf("L\n");
 }
