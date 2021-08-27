@@ -19,8 +19,8 @@ int main(){
                 dp[i][j] = INT_MAX;
         }
     }
-    for(int i = 2; i < N; i++){
-        for(int j = 0; j + i < N; j++){
+    for(int i = 2; i < N; i++){ // 탐색범위
+        for(int j = 0; j + i < N; j++){ // 시작점
             for(int k = j; k < j + i; k++){
                 tmp = v[j].first * v[k].second * v[j + i].second;
                 dp[j][j + i] = min(dp[j][j + i], dp[j][k] + dp[k + 1][j + i] + tmp);
