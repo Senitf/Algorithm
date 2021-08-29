@@ -7,7 +7,7 @@ struct move mv[4] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 int ans, tmpans, ttmpans;
 char chk[5][5];
 bool seven[5][5], visited[5][5];
-queue<pair<int, int>> q;
+queue<pair<int, int> > q;
 string s;
 bool check(){
     bool flag;

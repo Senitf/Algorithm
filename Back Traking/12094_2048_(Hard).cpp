@@ -126,19 +126,19 @@ int moveLower(){
 }
 void func(int cnt){
     int tmpArr[22][22] = {0}, tmpAns = 0;
-    for(int i = 1; i <= N; i++){
+    for(int i = 1; i <= N; i++){ //움직이고 나서 나중에 다시 돌아오기 위한 배열 기록
         for(int j = 1; j <= N; j++){
             tmpArr[i][j] = arr[i][j];
             if(tmpAns < arr[i][j])
                 tmpAns = arr[i][j];
         }
     }
-    if(maxAns < tmpAns)
+    if(maxAns < tmpAns) //최댓값 갱신
             maxAns = tmpAns;
-    if(cnt == 5){
+    if(cnt == 10){
         return;
     }
-    if(tmpAns * pow(2, 5 - cnt) <= maxAns)
+    if(tmpAns * pow(2, 10 - cnt) <= maxAns) //아주 운좋게 계속 커지더라도 주어진 횟수 안에 최댓값 갱신을 할 수 없는 경우
         return;
     for(int i = 0; i < 4; i++){
         for(int k = 1; k <= N; k++){
@@ -163,7 +163,7 @@ void func(int cnt){
         default:
             break;
         }
-        if(tmpAns == -1){
+        if(tmpAns == -1){ //어떤 블럭도 움직이지 않은 경우
             continue;
         }
         func(cnt + 1);
