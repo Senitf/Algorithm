@@ -1,78 +1,56 @@
 #include <bits/stdc++.h>
 using namespace std;
-int arr[3][3], zero, ans = -1;
-bool check(int turn){
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            if(arr[i][j] != turn)
-                break;
-            if(j == 2)
-                return true;
-        }
+bool check(string s, int a, int b, int c){
+    for(int i = a, j = b; i < a + c; i++, j++){
+        if(s[i] != s[j])
+            return false;
     }
-    for(int j = 0; j < 3; j++){
-        for(int i = 0; i < 3; i++){
-            if(arr[i][j] != turn)
-                break;
-            if(i == 2)
-                return true;
-        }
-    }
-    for(int i = 0; i < 3; i++){
-        if(arr[i][i] != turn)
-            break;
-        if(i == 2)
-            return true;
-    }
-    for(int i = 0; i < 3; i++){
-        if(arr[i][2 - i] != turn)
-            break;
-        if(i == 2)
-            return true;
-    }
-    return false;
+    return true;
 }
-int func(int turn){
-    if(turn == 1){
-        if(check(2)) return -1;
-    }
-    else{
-        if(check(1))
-            return -1;
-    }
-    int minval = 2;
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            if(arr[i][j] == 0){
-                arr[i][j] = turn;
-                if(turn == 1)
-                    minval = min(minval, func(2));
-                else
-                    minval = min(minval, func(1));
-                arr[i][j] = 0;
+int solution(string s) {
+    int answer = 1001, jStart, jEnd, cmpStart, cmpEnd, tmpAns;
+    bool flag;
+    for(int i = 1; i <= s.length() / 2; i++){
+        tmpAns = 0;
+        for(int j = 0; j < s.length(); j += i){
+            jStart = j;
+            jEnd = j + i - 1;
+            cmpStart = jEnd + 1;
+            cmpEnd = cmpStart + i - 1;
+            flag = false;
+            if(jEnd >= s.length()){
+                tmpAns += s.length() - jStart;
+                break;
+            }
+            while(true){
+                if(cmpEnd >= s.length()){
+                    cmpStart -= i;
+                    break;
+                }
+                if(!check(s, jStart, cmpStart, i)){
+                    break;
+                }
+                flag = true;
+                cmpStart += i;
+                cmpEnd += i;
+            }
+            if(flag == true){
+                j = cmpStart - i;
+                tmpAns += 1 + i;
+            }
+            else{
+                tmpAns += i;
             }
         }
-    }
-    if(minval == 2 || minval == 0)
-        return 0;
-    return -minval;
-}
-int main(){
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            scanf("%d", &arr[i][j]);
-            if(arr[i][j] == 0)
-                zero++;
+        
+        if(tmpAns < answer){
+            printf("%d\n", i);
+            answer = tmpAns;
         }
     }
-    if(zero % 2 == 1)
-        ans = func(1);
-    else
-        ans = func(2);
-    if(ans == 1)
-        printf("W\n");
-    else if(ans == 0)
-        printf("D\n");
-    else
-        printf("L\n");
+    return answer;
+}
+int main(){
+    string s = "abcabc";
+    printf("%d\n", solution(s));
 }

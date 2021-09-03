@@ -1,2 +1,2 @@
 
-                    arr[i][j] = 0;
+                if(cmpEnd >= s.length()){
